@@ -3,6 +3,9 @@
 namespace Thruster\Bundle\DataMapperBundle\Tests;
 
 use Thruster\Bundle\DataMapperBundle\DataMapperAwareTrait;
+use Thruster\Bundle\DataMapperBundle\Tests\Fixtures\DifferntNameTrait;
+use Thruster\Bundle\DataMapperBundle\Tests\Fixtures\InvalidUseOfTrait;
+use Thruster\Bundle\DataMapperBundle\Tests\Fixtures\WorkingImplementationOfTrait;
 
 /**
  * Class DataMapperAwareTraitTest
@@ -14,11 +17,7 @@ class DataMapperAwareTraitTest extends \PHPUnit_Framework_TestCase
 {
     public function testTraitWithProperty()
     {
-        $class = new class {
-            use DataMapperAwareTrait;
-
-            public $container;
-        };
+        $class = new WorkingImplementationOfTrait();
 
         $input = $this->getMockBuilder('\Thruster\Component\DataMapper\DataMapper')
             ->disableOriginalConstructor()
@@ -44,16 +43,7 @@ class DataMapperAwareTraitTest extends \PHPUnit_Framework_TestCase
 
     public function testTraitWithMethod()
     {
-        $class = new class {
-            use DataMapperAwareTrait;
-
-            public $containeris;
-
-            public function getContainer()
-            {
-                return $this->containeris;
-            }
-        };
+        $class = new DifferntNameTrait();
 
         $input = $this->getMockBuilder('\Thruster\Component\DataMapper\DataMapper')
             ->disableOriginalConstructor()
@@ -83,9 +73,7 @@ class DataMapperAwareTraitTest extends \PHPUnit_Framework_TestCase
      */
     public function testTraitWithException()
     {
-        $class = new class {
-            use DataMapperAwareTrait;
-        };
+        $class = new InvalidUseOfTrait();
 
         $class->getDataMapper('foo_bar');
     }

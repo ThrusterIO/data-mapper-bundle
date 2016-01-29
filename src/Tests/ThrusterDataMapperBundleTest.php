@@ -2,6 +2,7 @@
 
 namespace Thruster\Bundle\DataMapperBundle\Tests;
 
+use Thruster\Bundle\DataMapperBundle\Tests\Fixtures\DataMapperMock;
 use Thruster\Bundle\DataMapperBundle\ThrusterDataMapperBundle;
 
 /**
@@ -14,7 +15,9 @@ class ThrusterDataMapperBundleTest extends \PHPUnit_Framework_TestCase
 {
     public function testAddCompilerPass()
     {
-        $builderMock = $this->getMock('\Symfony\Component\DependencyInjection\ContainerBuilder');
+        $builderMock = $this->getMockBuilder('\Symfony\Component\DependencyInjection\ContainerBuilder')
+            ->setMethods(['addCompilerPass', 'setDefinition', 'getDefinition', 'findTaggedServiceIds'])
+            ->getMock();
 
         $builderMock->expects($this->once())
             ->method('addCompilerPass')
@@ -37,8 +40,10 @@ class ThrusterDataMapperBundleTest extends \PHPUnit_Framework_TestCase
                 $this->returnCallback(
                     function ($id, $definition) {
                         $this->assertSame('thruster_data_mappers', $id);
-                        $this->assertInstanceOf('\Symfony\Component\DependencyInjection\Definition',
-                            $definition);
+                        $this->assertInstanceOf(
+                            '\Symfony\Component\DependencyInjection\Definition',
+                            $definition
+                        );
                         $this->assertSame('Thruster\Component\DataMapper\DataMappers', $definition->getClass());
                     }
                 )
@@ -51,13 +56,7 @@ class ThrusterDataMapperBundleTest extends \PHPUnit_Framework_TestCase
                     function ($id) {
                         $this->assertSame('foo_bar', $id);
 
-                        $classDef = new class
-                        {
-                            public static function getName()
-                            {
-                                return 'name';
-                            }
-                        };
+                        $classDef = new DataMapperMock();
 
                         $mock = $this->getMock('\Symfony\Component\DependencyInjection\Definition');
                         $mock->expects($this->once())

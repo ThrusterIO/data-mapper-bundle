@@ -2,10 +2,7 @@
 
 namespace Thruster\Bundle\DataMapperBundle;
 
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -24,29 +21,7 @@ class ThrusterDataMapperBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(
-            new class implements CompilerPassInterface {
-                /**
-                 * @inheritDoc
-                 */
-                public function process(ContainerBuilder $container)
-                {
-                    $dataMappersId = 'thruster_data_mappers';
-                    $dataMappersDefinition = new Definition('Thruster\Component\DataMapper\DataMappers');
-
-                    $container->setDefinition($dataMappersId, $dataMappersDefinition);
-
-                    foreach ($container->findTaggedServiceIds('thruster_data_mapper') as $id => $tags) {
-                        $definition = $container->getDefinition($id);
-
-                        $name = call_user_func(
-                            [$definition->getClass(), 'getName']
-                        );
-
-                        $dataMappersDefinition->addMethodCall('addMapper', [$name, new Reference($id)]);
-                    }
-                }
-            }
+            new CompilerPass()
         );
     }
-
 }
