@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "thruster/data-mapper": "~1.0",
+        "thruster/data-mapper": "~2.0",
         "symfony/http-kernel": ">= 2.5",
         "symfony/dependency-injection": ">= 2.5"
     },
@@ -29,7 +29,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "2.0-dev"
         }
     }
 }
