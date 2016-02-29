@@ -26,13 +26,7 @@ class CompilerPass implements CompilerPassInterface
         $container->setDefinition($dataMappersId, $dataMappersDefinition);
 
         foreach ($container->findTaggedServiceIds('thruster_data_mapper') as $id => $tags) {
-            $definition = $container->getDefinition($id);
-
-            $name = call_user_func(
-                [$definition->getClass(), 'getName']
-            );
-
-            $dataMappersDefinition->addMethodCall('addMapper', [$name, new Reference($id)]);
+            $dataMappersDefinition->addMethodCall('addMapper', [new Reference($id)]);
         }
     }
 }

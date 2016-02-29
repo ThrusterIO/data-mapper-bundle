@@ -39,7 +39,7 @@ This bundle wraps DataMapper component to provide integration with Symfony by us
 ```
 
 ```php
-$output = $this->container->get('thruster_data_mappers')->getMapper('some_mapper')->map($input);
+$output = $this->container->get('thruster_data_mappers')->getMapper(SomeMapper::class)->map($input);
 ```
 
 Using provided trait
@@ -47,7 +47,7 @@ Using provided trait
 ```php
 use DataMapperAwareTrait;
 //...
-$output = $this->getDataMapper('some_mapper')->map($input);
+$output = $this->getDataMapper(SomeMapper::class)->map($input);
 ```
 
 

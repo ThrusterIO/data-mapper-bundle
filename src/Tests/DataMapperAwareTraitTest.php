@@ -69,7 +69,8 @@ class DataMapperAwareTraitTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \LogicException
-     * @expectedExceptionMessage DataMapperAwareTrait require Symfony Container accessible via property$container or ->getContainer() method
+     * @expectedExceptionMessage DataMapperAwareTrait require Symfony Container accessible via property$container or
+     *                           ->getContainer() method
      */
     public function testTraitWithException()
     {
