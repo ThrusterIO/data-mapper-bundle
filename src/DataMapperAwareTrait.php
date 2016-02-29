@@ -12,12 +12,12 @@ use Thruster\Component\DataMapper\DataMapper;
  */
 trait DataMapperAwareTrait
 {
-    public function getDataMapper(string $name) : DataMapper
+    public function getDataMapper(string $class) : DataMapper
     {
         if (property_exists($this, 'container')) {
-            return $this->container->get('thruster_data_mappers')->getMapper($name);
+            return $this->container->get('thruster_data_mappers')->getMapper($class);
         } elseif (method_exists($this, 'getContainer')) {
-            return $this->getContainer()->get('thruster_data_mappers')->getMapper($name);
+            return $this->getContainer()->get('thruster_data_mappers')->getMapper($class);
         }
 
         throw new \LogicException(

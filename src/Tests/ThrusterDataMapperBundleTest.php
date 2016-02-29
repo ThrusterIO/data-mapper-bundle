@@ -45,31 +45,6 @@ class ThrusterDataMapperBundleTest extends \PHPUnit_Framework_TestCase
             );
 
         $builderMock->expects($this->once())
-            ->method('getDefinition')
-            ->will(
-                $this->returnCallback(
-                    function ($id) {
-                        $this->assertSame('foo_bar', $id);
-
-                        $classDef = new class
-                        {
-                            public static function getName()
-                            {
-                                return 'name';
-                            }
-                        };
-
-                        $mock = $this->getMock('\Symfony\Component\DependencyInjection\Definition');
-                        $mock->expects($this->once())
-                            ->method('getClass')
-                            ->willReturn($classDef);
-
-                        return $mock;
-                    }
-                )
-            );
-
-        $builderMock->expects($this->once())
             ->method('findTaggedServiceIds')
             ->will(
                 $this->returnCallback(
